@@ -4,6 +4,8 @@ from story import Choice
 
 DEBUG = False # TODO
 
+TYPING_SPEED = 30  # Lower is faster
+
 class TextChoice(customtkinter.CTk):
     def __init__(self, fg_color = None, **kwargs):
         super().__init__(fg_color, **kwargs)
@@ -48,17 +50,65 @@ class TextChoice(customtkinter.CTk):
             button = customtkinter.CTkButton(self.choice_frame, text="")
             self.choice_buttons.append(button)
 
+        self.typing_job = None
+
         self.update_scene("WIP")
     
     def update_scene(self, choice: str):
 
+        if self.typing_job:
+            self.after_cancel(self.typing_job)
+            self.typing_job = None
+
+        for button in self.choice_buttons:
+            button.pack_forget()
+
         scene: Choice = S_C[choice]
-
-        self.story_label.configure(text=scene.box_text)        
-        next_choices_names = scene.choices
-        next_choice_links = scene.next_choices
+        self._start_typing(''.join(scene.box_text), scene)
+    
 
 
+    def _perform_backspace(self, full_text, scene, index):
+        self.story_label.configure(text=full_text[:index])
+        
+        self.typing_job = self.after(
+            350 - (175 if full_text[index+1]=='^' else 0), # Time to reset
+            lambda: self._start_typing(full_text, scene, index, True)
+        )
+
+    def _start_typing(self, full_text, scene: Choice, index=0, back=False):
+
+        if index < len(full_text):
+            current_display_text = full_text[:index+1]
+            self.story_label.configure(text=current_display_text)
+
+            speed = TYPING_SPEED
+
+            char = full_text[index]
+            if char == '^':
+                if index + 1 < len(full_text):
+                    full_text = full_text[:index-1] + full_text[index+1:]
+                    index -= 1              # Time mistake is shown
+                    self.typing_job = self.after(200 - (150 if back else 50), self._perform_backspace(full_text, scene, index))
+                else:
+                    self.typing_job = self.after(1, lambda: self._start_typing(full_text, scene, index+1))
+                return
+
+            speed += 30 if back else 0
+
+            self.typing_job = self.after(
+                speed,
+                lambda: self._start_typing(full_text, scene, index + 1)
+            )
+        else:
+            # --- Typing is finished ---
+            self.typing_job = None
+            # Now, show the buttons for this scene
+            next_choices_names = scene.choices
+            next_choice_links = scene.next_choices
+            self._configure_buttons(next_choices_names, next_choice_links)
+
+    def _configure_buttons(self, next_choices_names, next_choice_links):
         for i in range(4):
             button = self.choice_buttons[i]
 

@@ -16,13 +16,13 @@ TEST_STORY_CHOICES: dict[str, Choice] = {
         box="This is a work in progress",
         choice=[
             "Dock",
-            "",
+            "WIP",
             "",
             ""
         ],
         next_choices=[
             "Dock",
-            "",
+            "WIP",
             "",
             ""
         ]
