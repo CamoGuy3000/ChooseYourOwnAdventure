@@ -6,7 +6,8 @@ class Choice:
                  next_choices: list[Choice],
                  ):
         self.box_text: str = box
-        self.choices: list[str] = choice
+        self.choices: list[(list[str], int)] = choice
+        # List of list of choice strings and the current selected index
 
         self.next_choices: list[str] = next_choices
 
@@ -15,10 +16,10 @@ TEST_STORY_CHOICES: dict[str, Choice] = {
     "WIP": Choice(
         box="This is a work in progress",
         choice=[
-            "Dock",
-            "WIP",
-            "",
-            ""
+            (["Dock"], 0),
+            (["WIP"], 0),
+            ([""], 0),
+            ([""], 0)
         ],
         next_choices=[
             "Dock",
@@ -31,9 +32,9 @@ TEST_STORY_CHOICES: dict[str, Choice] = {
     "Dock": Choice(
         box="You are on a dock looking at a boat",
         choice=[
-            "Go on the boat",
-            "Turn aroud to the harbor",
-            "Jump in the water",
+            (["Go on the boat"], 0),
+            (["Turn aroud to the harbor"], 0),
+            (["Jump in the water"], 0),
         ],
         next_choices=[
             "Board",
@@ -44,23 +45,23 @@ TEST_STORY_CHOICES: dict[str, Choice] = {
     "Board": Choice(
         box="You board the boat",
         choice=[
-            "Sail the boat",
-            "Sleep on the boat",
-            "Get a drink",
-            "Wait for someone",
+            (["Sail the boat"], 0),
+            (["Sleep on the boat"], 0),
+            (["Board 1", "Board 2", "Board 3"], 0),
+            (["Wait for someone"], 0),
         ],
         next_choices=[
             "WIP",
             "WIP",
-            "WIP",
+            "Board",
             "WIP"
         ]
     ),
     "Harbor": Choice(
         box="You are on the harbor",
         choice=[
-            "Back to the boat",
-            "Look around",
+            (["Back to the boat"], 0),
+            (["Look around"], 0),
         ],
         next_choices=[
             "Dock",
@@ -70,7 +71,7 @@ TEST_STORY_CHOICES: dict[str, Choice] = {
     "Water": Choice(
         box="You jump in the water",
         choice=[
-            "Swim",
+            (["Swim"], 0),
         ],
         next_choices=[
             "WIP",

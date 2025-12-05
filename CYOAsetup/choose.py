@@ -1,4 +1,5 @@
 import customtkinter
+from gameStats import SPECIAL_CHOICES
 from story import TEST_STORY_CHOICES as S_C
 from story import Choice
 
@@ -113,15 +114,34 @@ class TextChoice(customtkinter.CTk):
             button = self.choice_buttons[i]
 
             if i < len(next_choices_names):
-                choice = next_choices_names[i]
-                # Check if the choice doesn't exist
-                if choice == "":
+                # Extract the list of options and the current index for this button slot
+                options_list = next_choices_names[i][0]
+                current_index = next_choices_names[i][1]
+                
+                # Get the text based on the current index
+                choice_text = options_list[current_index]
+
+                # Check if the choice text is empty (hidden choice)
+                if choice_text == "":
                     button.pack_forget()
                     continue
+                
+                # Define what happens when the button is clicked
+                def on_click(idx=i, next_node=next_choice_links[i]):
+                    if next_node in SPECIAL_CHOICES:
+                        SPECIAL_CHOICES[next_node]()  # Call the special function
+                    # 1. Update the choice index for the NEXT time we come here
+                    opts, c_idx = next_choices_names[idx]
+                    # Cycle to the next text option (wrap around to 0 if at the end)
+                    new_idx = min((c_idx + 1), len(opts) - 1)
+                    next_choices_names[idx] = (opts, new_idx)
                     
+                    # 2. Move to the next scene
+                    self.update_scene(next_node)
+
                 button.configure(
-                    text=choice,
-                    command=lambda next_node=next_choice_links[i]: self.update_scene(next_node)
+                    text=choice_text,
+                    command=on_click
                 )
 
                 button.pack(pady=8, padx=10, fill="x")
