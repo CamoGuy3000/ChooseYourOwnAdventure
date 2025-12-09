@@ -2,7 +2,11 @@ import story
 
 
 def goodbye_special(engine):
-    engine.destroy()
+    if engine.HAVE_GUN:
+        engine.after(100, engine.update_scene, "Gun Special")
+        engine.after(3000, engine.destroy)
+    else:
+        engine.destroy()
 
 # Add 'engine' argument to accept the passed 'self'
 def board_special(engine):
@@ -40,14 +44,14 @@ def laptop_check(engine):
 def drawer_check(engine):
     current_scene = story.STORY_CHOICES.get("Drawer")
     if current_scene is not None:
-        if engine.HAVE_KEY and engine.HAVE_CODE:
-            current_scene.box_text = [["The key I have would fit perfectly"], 0]
+        if engine.HAVE_KEY:
+            current_scene.box_text = [["The key I have would fit perfectly, I swore I would never use it though..."], 0]
             current_scene.choices[0] = (["Use the key to open the drawer"], 0)
             current_scene.choices[1] = (["Leave it alone"], 0)
             current_scene.next_choices[0] = "Drawer Opened"
             current_scene.next_choices[1] = "Desk"
         else:
-            current_scene.box_text = [["The drawer is locked. I don\'t have a key. I locked it for a reason. The code changes everyday too, no need for me to try to guess it."], 0]
+            current_scene.box_text = [["The drawer is locked. I don\'t have a key. I locked it for a reason."], 0]
             current_scene.choices[0] = (["Leave it alone"], 0)
             current_scene.next_choices[0] = "Desk"
 
@@ -100,6 +104,18 @@ def pack_bag(engine):
     if not engine.BAG_PACKED:
         engine.BAG_PACKED = True
 
+def brush_teeth_special(engine):
+    if not engine.TEETH_BRUSHED:
+        engine.TEETH_BRUSHED = True
+
+def wash_face_special(engine):
+    if not engine.FACE_WASHED:
+        engine.FACE_WASHED = True
+
+def leak_special(engine):
+    if not engine.TOOK_LEAK:
+        engine.TOOK_LEAK = True
+
 
 def lazy_special(engine):
     current_scene = story.STORY_CHOICES.get("Lazy")
@@ -137,3 +153,100 @@ def wants_phone_special(engine):
 def wants_harddrive_special(engine):
     engine.wants_harddrive = True
 
+ENTERED_ALREADY = False
+def living_room_special(engine):
+    global ENTERED_ALREADY
+    if ENTERED_ALREADY:
+        current_scene = story.STORY_CHOICES.get("Living Room")
+        if current_scene is not None:
+            current_scene.box_text = [["My living room, empty, but full of me"], 0]
+        return
+    ENTERED_ALREADY = True
+
+    if not engine.TEETH_BRUSHED:
+        engine.deviance += 5
+    if not engine.FACE_WASHED:
+        engine.deviance += 5
+    if not engine.TOOK_LEAK:
+        engine.deviance += 5
+    
+    box = ""
+    if not engine.TEETH_BRUSHED and not engine.FACE_WASHED and not engine.TOOK_LEAK:
+        box += "As I step into the living room, the light from outside casts long shadows across the floor. The unwashed feeling of my face and the lingering taste of unbrushed teeth make me uneasy. My bladder feels full, a reminder of my neglect to take care of myself this morning. The weight of these oversights presses down on you, making each movement of mine feel heavier than the last."
+    
+    if engine.deviance > 50:
+        box = "You know what you did."
+    elif engine.deviance > 20:
+        box += "\nOkay I get it. I don\'t matter much to you, but can you at least treat me like a person?"
+    elif engine.deviance > 15:
+        box += "\nLook I know this may be a game to you, but it would be nice to have you take some care on how you treat this day."
+    elif engine.deviance < 50:
+        box += "\nI walk into my living room, the emptiness is as prevalent as the lack of space. There isn\'t much to do here, but I try to find a way."
+
+    current_scene = story.STORY_CHOICES.get("Living Room")
+    if current_scene is not None:
+        current_scene.box_text = [[box], 0]
+
+def eggs_special(engine):
+    if engine.EGGS is False:
+        engine.EGGS = True
+
+def stove_special(engine):
+    if engine.EGGS is False:
+        return
+    current_scene = story.STORY_CHOICES.get("Stove")
+    if current_scene is not None:
+        current_scene.choices[0] = (["Cook the eggs"], 0)
+        current_scene.next_choices[0] = "Cook Eggs"
+
+def the_story_special(engine):
+    current_scene = story.STORY_CHOICES.get("The Story")
+    box = ""
+    if engine.deviance > 25:
+        box += "I\'m sure you tried your best, but you didn\'t seem to mind to spend your time watching me waste away or not do what I needed or… or… or… it can go on and on."
+        current_scene.choices[0] = (["I\'m sorry I guess?"], 0)
+        current_scene.next_choices[0] = "End"
+    else:
+        box += "Well that's nice to hear. I hope the mundane wasn\'t too mundane"
+        current_scene.choices[0] = (["It wasn't that bad"], 0)
+        current_scene.choices[1] = (["It was pretty bad"], 0)
+        current_scene.next_choices[0] = "End"
+        current_scene.next_choices[1] = "End"
+    current_scene.box_text = [[box], 0]
+
+def end_special(engine):
+    current_scene = story.STORY_CHOICES.get("End")
+    
+    if engine.wants_typewriter:
+        current_scene.box_text = [["Oh yeah... I guess I did ask for this typewriter. I don\'t know what I am supposed to do with it though..."], 0]
+        current_scene.choices[0] = (["I don't know either"], 0)
+        current_scene.next_choices[0] = "END"
+    elif engine.wants_phone:
+        current_scene.box_text = [["This is the phone I asked for. This is actually my old phone. I wonder if it still works"], 0]
+        current_scene.choices[0] = (["Turn On"], 0)
+        current_scene.choices[1] = (["Don\'t Bother"], 0)
+        current_scene.next_choices[0] = "Turn on"
+        current_scene.next_choices[1] = "Dont Turn on"
+    elif engine.wants_harddrive:
+        current_scene.box_text = [["Here is the harddrive I asked for… it does look a bit broken I don\'t think there is anything I can do with it unfortunately"], 0]
+        current_scene.choices[0] = (["That is unfortunate..."], 0)
+        current_scene.next_choices[0] = "END"
+    else:
+        current_scene.box_text = [["Theres my door"], 0]
+        current_scene.choices[0] = (["Enter"], 0)
+        current_scene.next_choices[0] = "END"
+
+def dad_texts(engine):
+    if not engine.dad1_found:
+        scene = story.STORY_CHOICES.get("Old Phone Texts")
+        scene.box_text = [["Nothing I can see here", "Still nothing"], 0]
+        scene.choices[0] = (["anticlimactic"], 0)
+        scene.next_choices[0] = "Turn On"
+        return
+    current_scene = story.STORY_CHOICES.get("Turn on")
+    current_scene.choices[2] = (["Treasure it"], 0)
+    
+    scene = story.STORY_CHOICES.get("Old Phone Texts")
+    scene.box_text = [["These... are my old texts with my dad before the car crash. I can't beleive they are still here. I would never have found them. I... I... thank you.\nHey kiddo, you and..."], 0]
+    scene.choices[0] = (["Give space to read texts"], 0)
+    scene.next_choices[0] = "SOLO_END"

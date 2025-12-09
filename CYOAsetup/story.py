@@ -34,8 +34,7 @@ STORY_CHOICES: dict[str, Choice] = {
         ]
     ),
     "Start": Choice(
-        # box="BEEP ^ ^ ^ ^ BEEP ^ ^ ^ ^ BEEP\n\n ^ ^ ^ ^BEEP ^ ^ ^ ^ BEEP ^ ^ ^ ^ BEEP\n\n ^ ^ ^ ^The Mundane ^ ^ ^ ^     ",
-        box="welcome",
+        box="BEEP ^ ^ ^ ^ BEEP ^ ^ ^ ^ BEEP\n\n ^ ^ ^ ^BEEP ^ ^ ^ ^ BEEP ^ ^ ^ ^ BEEP\n\n ^ ^ ^ ^The Mundane ^ ^ ^ ^     ",
         choice=[
             (["Wake Up"], 0),
             ([""], 0),
@@ -538,7 +537,7 @@ STORY_CHOICES: dict[str, Choice] = {
                         ""
                     ]
                 ),
-                    "Listen": Choice( #TODO: add music
+                    "Listen": Choice(
                         box=[["*Jam out*"], 0],
                         choice=[
                             (["Back to assignments"], 0),
@@ -695,21 +694,6 @@ STORY_CHOICES: dict[str, Choice] = {
                         ""
                     ]
                 ),
-                "Point It": Choice( # TODO
-                    box=[["Congrats"], 0],
-                    choice=[
-                        ([""], 0),
-                        ([""], 0),
-                        ([""], 0),
-                        ([""], 0)
-                    ],
-                    next_choices=[
-                        "",
-                        "",
-                        "",
-                        ""
-                    ]
-                ),
                 "Leave it alone": Choice(
                     box=[["You leave the gun alone."], 0],
                     choice=[
@@ -805,9 +789,509 @@ STORY_CHOICES: dict[str, Choice] = {
         ]
     ),
 
+    "Living Room": Choice(
+        box=[[""], 0],
+        choice=[
+            (["Kitchenette"], 0),
+            (["Couch"], 0),
+            (["Window"], 0),
+            (["Front Door"], 0)
+        ],
+        next_choices=[
+            "Kitchen",
+            "Couch",
+            "Window",
+            "Front Door"
+        ]
+    ),
+        "Kitchen": Choice(
+            box=[["Heading to my kitchen, if you can call it that. I ponder breakfast", "My kitchen"], 0],
+            choice=[
+                (["Fridge"], 0),
+                (["Freezer"], 0),
+                (["Stove"], 0),
+                (["Back to Living Room"], 0)
+            ],
+            next_choices=[
+                "Fridge",
+                "Freezer",
+                "Stove",
+                "Living Room"
+            ]
+        ),
+            "Fridge": Choice(
+                box=[["What I\'ve got is what I\'ve got. Even if it isn\'t much", "Back to staring at my eerly empty fridge"], 0],
+                choice=[
+                    (["Grab leftovers"], 0),
+                    (["Grab eggs"], 0),
+                    ([""], 0),
+                    (["Back to Kitchenette"], 0)
+                ],
+                next_choices=[
+                    "Leftovers",
+                    "Eggs",
+                    "",
+                    "Living Room"
+                ]
+            ),
+                "Leftovers": Choice(
+                    box=[["You heat up the leftovers from last night. Not the most appetizing, but it will do.", "Leftovers are gone now."], 0],
+                    choice=[
+                        (["Sounds... tasty"], 0),
+                        ([""], 0),
+                        ([""], 0),
+                        ([""], 0)
+                    ],
+                    next_choices=[
+                        "Fridge",
+                        "",
+                        "",
+                        ""
+                    ]
+                ),
+                "Eggs": Choice(
+                    box=[["You grab some eggs from the fridge. Maybe you can cook them later.", "Eggs are taken. Note to get some from the store", "No more eggs..."], 0],
+                    choice=[
+                        (["Back to Fridge"], 0),
+                        ([""], 0),
+                        ([""], 0),
+                        ([""], 0)
+                    ],
+                    next_choices=[
+                        "Fridge",
+                        "",
+                        "",
+                        ""
+                    ]
+                ),
+            "Freezer": Choice(
+                box=[["Just some frozen dinners"], 0],
+                choice=[
+                    (["Take frozen dinner"], 0),
+                    (["Keep looking"], 0),
+                    ([""], 0),
+                    (["Back to Kitchenette"], 0)
+                ],
+                next_choices=[
+                    "Frozen Dinner",
+                    "Keep Looking",
+                    "",
+                    "Living Room"
+                ]
+            ),
+                "Frozen Dinner": Choice(
+                    box=[["You decide to take out a pizza. Not really what I want to be eating for breakfast", "Not really breakfast food."], 0],
+                    choice=[
+                        (["Back to Freezer"], 0),
+                        ([""], 0),
+                        ([""], 0),
+                        ([""], 0)
+                    ],
+                    next_choices=[
+                        "Freezer",
+                        "",
+                        "",
+                        ""
+                    ]
+                ),
+                "Keep Looking": Choice(
+                    box=[["Just letting the cold out...", "My toes feel the cool air pooling around them", "Now my ankles feel it too", "Any reason you are doing this?", "I think it is time to close the freezer"], 0],
+                    choice=[
+                        (["Keep looking", "Keep looking", "Keep looking", "Keep looking", "Keep looking", "Keep looking", "Maybe something is here", "Keep looking"], 0),
+                        (["Close the freezer"], 0),
+                        ([""], 0),
+                        ([""], 0)
+                    ],
+                    next_choices=[
+                        "Keep Looking",
+                        "Freezer",
+                        "",
+                        ""
+                    ]
+                ),
+            "Stove": Choice(
+                box=[["My stove... not much to relish.", "My stove... not much to note.", "My stove... not much to do here.", "My stove... not very interesting.", "Looking at my stove, the grease marks jump out at me, the burns show the neglect I have showed when cooking late at night. Turning to the sink, a pile of casualties of my laziness lie.", "My stove"], 0],
+                choice=[
+                    ([""], 0),
+                    (["Turn on burner", "Turn off the burner","Turn on burner", "Turn off the burner","Turn on burner", "Turn off the burner","Turn on burner", "Turn off the burner","Turn on burner", "Turn off the burner","Doesn't this get old?", "Flip the burner"], 0),
+                    ([""], 0),
+                    (["Back to the kitchen"], 0),
+                ],
+                next_choices=[
+                    "",
+                    "Stove",
+                    "",
+                    "Kitchen"
+                ]
+            ),
+                "Cook Eggs": Choice(
+                box=[["You cook the eggs you took from the fridge. They turn out decent enough. Not as good as he made them, but good enough."], 0],
+                choice=[
+                    (["Back to Kitchenette"], 0),
+                    ([""], 0),
+                    ([""], 0),
+                    ([""], 0)
+                ],
+                next_choices=[
+                    "Living Room",
+                    "",
+                    "",
+                    ""
+                ]
+            ),
 
 
+        "Couch": Choice(
+            box=[["Sitting on my couch fills me with lethargic energy. The cushions begin to swallow my being as my mind begins to wander to what I want to do here.", "What a comfy couch"], 0],
+            choice=[
+                (["Scroll on Phone"], 0),
+                (["Watch TV"], 0),
+                (["No Nothing"], 0),
+                (["Back to Living Room"], 0)
+            ],
+            next_choices=[
+                "Couch Scroll",
+                "Couch Watch",
+                "Couch Nothing",
+                "Living Room"
+            ]
+        ),
+            "Couch Scroll": Choice(
+                box=[[
+                    "Cat videos, nice. Oh that guy really should have hit the breaks. More cat videos. There was a heist? Cool. You don\'t need to get back into politics."
+                    ], 0],
+                choice=[
+                    (["Keep scrolling"], 0),
+                    ([""], 0),
+                    ([""], 0),
+                    (["Its time to stop"], 0)
+                ],
+                next_choices=[
+                    "Couch Scroll",
+                    "",
+                    "",
+                    "Couch"
+                ]
+            ),
+            "Couch Watch": Choice(
+                box=[[
+                    "Turning on the TV, I go to Netflix. What to watch? No… No… not yet… waiting for someone else to watch that with. Maybe I\'ll watch something later",
+                    "Back to the TV, lets try hulu this time. Too serious, too scary, why is everything so weird on here?",
+                    "Disney maybe? Kids show, ruined show, man nothing to watch these days",
+                    "Spoiled for choice and here I am not able to choose anything.",
+                    "Unable to choose...",
+                ], 0],
+                choice=[
+                    (["Keep watching"], 0),
+                    ([""], 0),
+                    ([""], 0),
+                    (["Turn off the TV"], 0),
+                ],
+                next_choices=[
+                    "Couch Watch",
+                    "",
+                    "",
+                    "Couch",
+                ]
+            ),
+            "Couch Nothing": Choice(
+                box=[[
+                    "I sit on the couch. It\'s comfy",
+                    "Even though I got this at a thrift store, it does a great job.",
+                    "I wonder how many lives this couch has lived. How many experiences it has had",
+                    "Probably more than me...",
+                    "I guess time doesn\'t matter"
+                ], 0],
+                choice=[
+                    (["Keep sitting"], 0),
+                    ([""], 0),
+                    ([""], 0),
+                    (["Snap out of this"], 0),
+                ],
+                next_choices=[
+                    "Couch Nothing",
+                    "",
+                    "",
+                    "Couch",
+                ]
+            ),
+            
+        "Window": Choice(
+            box=[["My rusty window, cloudy glass, at least the hinges work"], 0],
+            choice=[
+                (["Open Window", "Close Window","Open Window", "Close Window","Open Window", "Close Window","Open Window", "Close Window","Open Window", "Close Window","Does this ever get old?"], 0),
+                (["Look Outside"], 0),
+                (["Climb Out"], 0),
+                (["Back to Living Room"], 0)
+            ],
+            next_choices=[
+                "Window",
+                "Window Look",
+                "Window Fall",
+                "Living Room"
+            ]
+        ),
+            "Window Look": Choice(
+                box=[["Looking outside I see what I am used to. The sidewalk I mindlessly meander down while listening to music I haven't written, the cars that are owned by people I don\'t know, and the world I haven\'t explored", "What a world that is out there", "Will I ever actually see what is around me?", "Its a nice day out"], 0],
+                choice=[
+                    (["Keep looking"], 0),
+                    ([""], 0),
+                    ([""], 0),
+                    (["Stop looking"], 0)
+                ],
+                next_choices=[
+                    "Window",
+                    "",
+                    "",
+                    "Window Look"
+                ]
+            ),
 
+
+        "Front Door": Choice(
+            box=[["Am you sure I\'m ready to leave? I've been autopiloting this morning for a while now, but I have to take some agency back", "Are you sure?"], 0],
+            choice=[
+                (["Yes?"], 0),
+                (["No"], 0),
+                ([""], 0),
+                ([""], 0)
+            ],
+            next_choices=[
+                "Leaving",
+                "Living Room",
+                "",
+                ""
+            ]
+        ),
+
+    "Leaving": Choice(
+        box=[["I leave out the front door. I walk down my hallway to the elevator. Ding… Ding… Ding… I listen on as I descend the 5 stories below me. I listen to this everyday really, multiple times a day. How many times have you played this day? Over and over, every one the same, well mostly the same."], 0],
+        choice=[
+            (["To the school"], 0),
+            (["Back into my room"], 0),
+            (["Are you talking to me?"], 0),
+            ([""], 0)
+        ],
+        next_choices=[
+            "To School",
+            "Not the Point",
+            "Talking to me?",
+            ""
+        ]
+    ),
+        "To School": Choice(
+            box=[["I head to school"], 0],
+            choice=[
+                (["Okay..."], 0),
+                ([""], 0),
+                ([""], 0),
+                ([""], 0)
+            ],
+            next_choices=[
+                "School",
+                "",
+                "",
+                ""
+            ]
+        ),
+        "Not the Point": Choice(
+            box=[["Not really the point… You\'ve made your choices, I\'ve made mine. Its about time to wrap this up. I don\'t have that many more words for you unfortunately."], 0],
+            choice=[
+                (["So this choice doesn't matter?"], 0),
+                (["Listen to me!"], 0),
+                (["What am I in this?"], 0),
+                (["More words?"], 0)
+            ],
+            next_choices=[
+                "School",
+                "School",
+                "School",
+                "School",
+            ]
+        ),
+        "Talking to me?": Choice(
+            box=[["Who else would I be talking to? I\'ve narrated the best I could, and sure you were the one choosing, but its not like I haven't been clear. Have you not noticed me talking to *you* this entire time?"], 0],
+            choice=[
+                (["What?"], 0),
+                (["Oh..."], 0),
+                ([""], 0),
+                ([""], 0)
+            ],
+            next_choices=[
+                "School",
+                "School",
+                "",
+                ""
+            ]
+        ),
+
+    "School": Choice(
+        box=[["I get to my school and do my classes. I won\'t bore you with details. They don\'t matter all that much anyway. To you what matters is what you chose. Did you scroll on your phone? Did you watch TV? Did you follow the story or just do what you felt like at the time"], 0],
+        choice=[
+            (["What I felt like"], 0),
+            (["The story"], 0),
+            (["Tried to break the game"], 0),
+            ([""], 0)
+        ],
+        next_choices=[
+            "Felt like",
+            "The Story",
+            "Break Game",
+            ""
+        ]
+    ),
+        "Felt like": Choice(
+            box=[["Did you see me as you? Did you see this world as your own? Or did you just make it up as you went..."], 0],
+            choice=[
+                (["I just wanted to have fun"], 0),
+                ([""], 0),
+                ([""], 0),
+                ([""], 0)
+            ],
+            next_choices=[
+                "End",
+                "",
+                "",
+                ""
+            ]
+        ),
+        "The Story": Choice(
+            box=[[""], 0],
+            choice=[
+                ([""], 0),
+                ([""], 0),
+                ([""], 0),
+                ([""], 0)
+            ],
+            next_choices=[
+                "",
+                "",
+                "",
+                ""
+            ]
+        ),
+        "Break Game": Choice(
+            box=[["At least you tell the truth. That is worth something I\'m sure. But why? Did you not trust that there would be a good ending? That the options you wanted were somehow better than the options that were provided? I\'m going back to my room."], 0],
+            choice=[
+                (["I'm not sure"], 0),
+                (["It was bad..."], 0),
+                (["I just wanted more"], 0),
+                ([""], 0)
+            ],
+            next_choices=[
+                "End",
+                "End",
+                "End",
+                ""
+            ]
+        ),
+
+    "End": Choice(
+        box=[[""], 0],
+        choice=[
+            ([""], 0),
+            ([""], 0),
+            ([""], 0),
+            ([""], 0)
+        ],
+        next_choices=[
+            "",
+            "",
+            "",
+            ""
+        ]
+    ),
+        "Turn on": Choice(
+            box=[["It lights up. I can\'t believe this is charged. What a trip! Hey, I wonder if flappy bird is still on here!", "My old phone, I can\'t beleive it"], 0],
+            choice=[
+                (["Look at games"], 0),
+                (["Look at texts"], 0),
+                (["Leave the junk phone"], 0),
+                ([""], 0)
+            ],
+            next_choices=[
+                "Phone Games",
+                "Old Phone Texts",
+                "END",
+                ""
+            ]
+        ),
+            "Phone Games": Choice(
+                box=[["Hey yeah, flappy bird is still on here!", "What a good game"], 0],
+                choice=[
+                    (["Keep playing"], 0),
+                    (["Cool!"], 0),
+                    ([""], 0),
+                    ([""], 0)
+                ],
+                next_choices=[
+                    "Phone Games",
+                    "Turn on",
+                    "",
+                    ""
+                ]
+            ),
+            "Old Phone Texts": Choice(
+                box=[[""], 0],
+                choice=[
+                    ([""], 0),
+                    ([""], 0),
+                    ([""], 0),
+                    ([""], 0)
+                ],
+                next_choices=[
+                    "",
+                    "",
+                    "",
+                    ""
+                ]
+            ),
+        "Dont Turn on": Choice(
+            box=[["I thought we were getting somewhere… but I guess it doesn\'t need to matter."], 0],
+            choice=[
+                (["I guess not"], 0),
+                ([""], 0),
+                ([""], 0),
+                ([""], 0)
+            ],
+            next_choices=[
+                "END",
+                "",
+                "",
+                ""
+            ]
+        ),
+
+    "END": Choice(
+        box=[["I head into my room, nothing changes for the better or the worse. I guess you were here. Yeah I know you thought you were some omnipotent being or something, but here you are, reading my words, my thoughts. Did you get the message? Is there one? Did you impose your own thoughts and feelings onto me as we went through this life? It\'s an interesting time to be alive, and I\'ll keep on keeping on and so will you. I guess you\'ll see if we meet again."], 0],
+        choice=[
+            (["Till we meet again"], 0),
+            (["What's the message?"], 0),
+            (["Were there secrets?"], 0),
+            (["I'm gonna try again"], 0)
+        ],
+        next_choices=[
+            "Goodbye",
+            "Goodbye",
+            "Goodbye",
+            "Goodbye",
+        ]
+    ),
+    "SOLO_END": Choice(
+        box=[["You leave the game to its own devices. What will happen, who knows. Is it yours to know? Who knows. But you didn\'t get the point. The point was that it isn\'t your life. What you did might be \"beautiful\" or whatever you want to ascribe to it, but in the end, it wasn\'t mundane."], 0],
+        choice=[
+            (["I thought I won?"], 0),
+            (["I got the good ending at least"], 0),
+            (["At least he is happy"], 0),
+            (["Screw you game"], 0)
+        ],
+        next_choices=[
+            "Goodbye",
+            "Goodbye",
+            "Goodbye",
+            "Goodbye",
+        ]
+    ),
 
     ## Endings
     "Lazy": Choice(
@@ -871,7 +1355,53 @@ STORY_CHOICES: dict[str, Choice] = {
         ]
     ),
 
+    "Point It": Choice(
+        box=[["Wow. I didn\'t think we would get here. Alright then\nHe grabs the gun and points it, the metallic barrel feeling cold on his skin he isn\'t sure what he is supposed to do. Told by you, the omniscient god of this world, that is how you see yourself right? As the barrel is pointed, he wonders where he went wrong, why he ended up here out of anything else he could. The trigger is pulled. Where was it aimed?"], 0],
+        choice=[
+            (["I don\'t know"], 0),
+            (["I know"], 0),
+            (["I don\'t want to think that"], 0),
+            (["Why did I do this?"], 0)
+        ],
+        next_choices=[
+            "Goodbye",
+            "Goodbye",
+            "Goodbye",
+            "Goodbye"
+        ]
+    ),
 
+    "Window Fall": Choice(
+        box=[["Without the care to look through or check or care, whichever it is. You decide it would be best to climb through. I look down the 5 stories my apartment sits on top of, the morning just beginning, people waking up, birds doing their thing, and me; me who is now falling the distance that you didn\'t know about or care enough to consider. Me, the thing you didn\'t consider enough of a being to care about. Did you do this knowingly? Time slows as I fall. Descending past what I knew, the trees I looked out at, the birds I fed… I bet you are feeling bad now huh? Give a little personality to the thing you threw out the window and suddenly it means something. What will my neighbors think? To you they don\'t exist. Neither do their thoughts. Neither do I. Well you are right about one thing at least, I definitely won\'t exi-"], 0],
+        choice=[
+            (["What have I done?"], 0),
+            ([""], 0),
+            ([""], 0),
+            ([""], 0)
+        ],
+        next_choices=[
+            "Goodbye",
+            "",
+            "",
+            ""
+        ]
+    ),
+
+    "Gun Special": Choice(
+        box=[["Why did you think the gun was important?"], 0],
+        choice=[
+            ([""], 0),
+            ([""], 0),
+            ([""], 0),
+            ([""], 0)
+        ],
+        next_choices=[
+            "",
+            "",
+            "",
+            ""
+        ]
+    ),
 
     "Goodbye": Choice(
         box=[["."], 0],

@@ -1,5 +1,5 @@
 import customtkinter
-from specialChoices import SPECIAL_CHOICES, LOST_TIME_CHOICES
+from specialChoices import SPECIAL_CHOICES, LOST_TIME_CHOICES, DEVIANCE_CHOICES
 from story import STORY_CHOICES as S_C
 # from story import TEST_STORY_CHOICES as S_C
 from story import Choice
@@ -13,12 +13,15 @@ class TextChoice(customtkinter.CTk):
         # Define typing speed here as an instance variable
         self.normal_typing_speed = 0 if DEBUG else 30
         self.typing_speed = 0 if DEBUG else 100
-        self.HAVE_KEY = True if DEBUG else False
-        self.HAVE_CODE = True if DEBUG else False
+        self.HAVE_KEY = True
+        self.HAVE_CODE = True
         self.HAVE_GUN = False
         self.BAG_PACKED = False
         self.WATCH_ON = False
         self.LATE = False
+        self.TEETH_BRUSHED = False
+        self.FACE_WASHED = False
+        self.TOOK_LEAK = False
         self.EGGS = False
         self.snooze_time = 0
         self.lost_time = 0
@@ -26,6 +29,7 @@ class TextChoice(customtkinter.CTk):
         self.wants_typewriter = False
         self.wants_phone = False
         self.wants_harddrive = False
+        self.deviance = 0
 
         self.title("Choose")
         # self.geometry("1920x1080")
@@ -147,7 +151,10 @@ class TextChoice(customtkinter.CTk):
                         SPECIAL_CHOICES[next_node](self)
                     if next_node in LOST_TIME_CHOICES:
                         self.lost_time += LOST_TIME_CHOICES[next_node]
-                    
+                    if next_node in DEVIANCE_CHOICES:
+                        self.deviance += DEVIANCE_CHOICES[next_node]
+
+
                     btn_opts, btn_idx = next_choices_names[idx]
                     next_choices_names[idx] = (btn_opts, min(btn_idx + 1, len(btn_opts) - 1))
                     
