@@ -243,7 +243,7 @@ STORY_CHOICES: dict[str, Choice] = {
                         ),
                             "Phone Oldest Emails": Choice(
                                 box=[[
-                                    "Key kiddo, I don't know if you'll get this, but here is your first email. Testing 1 2 3... Boo! Alright thats enough, love ya kid\nDad",
+                                    "Wait... is this from my dad? It is... I didn't think these still existed","Key kiddo, I don't know if you'll get this, but here is your first email. Testing 1 2 3... Boo! Alright thats enough, love ya kid\nDad",
                                     "Your transcript just came in, I can't beleive what a good job you are doing little man. I know it sucks I can\'t be there to congratulate you in person, but know I am so so so proud of you.\nDad",
                                     "Netflix code: 834668",
                                     "I know we just talked... but I love you son. I\'ll always be there, even when I'm not.\nDad",
@@ -365,7 +365,7 @@ STORY_CHOICES: dict[str, Choice] = {
                     next_choices=[
                         "Discord Respond",
                         "",
-                        ""
+                        "",
                         "Discord",
                     ]
                 ),
@@ -599,7 +599,7 @@ STORY_CHOICES: dict[str, Choice] = {
                 ),
                     "Laptop Oldest Emails": Choice(
                         box=[[
-                            "Key kiddo, I don't know if you'll get this, but here is your first email. Testing 1 2 3... Boo! Alright thats enough, love ya kid\nDad",
+                            "Wait... is this from my dad? It is... I didn't think these still existed","Key kiddo, I don't know if you'll get this, but here is your first email. Testing 1 2 3... Boo! Alright thats enough, love ya kid\nDad",
                             "Your transcript just came in, I can't beleive what a good job you are doing little man. I know it sucks I can\'t be there to congratulate you in person, but know I am so so so proud of you.\nDad",
                             "Netflix code: 834668",
                             "I know we just talked... but I love you son. I\'ll always be there, even when I'm not.\nDad",
@@ -665,7 +665,7 @@ STORY_CHOICES: dict[str, Choice] = {
                 ]
             ),
                 "Gun Stuff": Choice(
-                    box=[["There is a magazine sitting next to the gun"], 0],
+                    box=[["There is a magazine sitting next to the gun", "Now it requires a code...", "The cable lock is still in it", "The magazine is out", "Its ready I guess..."], 0],
                     choice=[
                         (["Pick up the magazine", "Enter the code", "Take out the cable lock", "Load the magazine", "Cock the gun", "Point it"], 0),
                         ([""], 0),
@@ -712,7 +712,7 @@ STORY_CHOICES: dict[str, Choice] = {
 
     "Bathroom": Choice(
         box=[[
-            "The bathroom is as I left it last night, toothbrush in the holder, toothpaste cap screwed on tight.",
+            "The bathroom is as I left it last night, toothbrush in the holder, toothpaste cap screwed on tight.","My uninteresting bathroom"
             ], 0],
         choice=[
             (["Brush Teeth"], 0),
@@ -876,7 +876,7 @@ STORY_CHOICES: dict[str, Choice] = {
                     "Frozen Dinner",
                     "Keep Looking",
                     "",
-                    "Living Room"
+                    "Kitchen"
                 ]
             ),
                 "Frozen Dinner": Choice(
@@ -946,7 +946,7 @@ STORY_CHOICES: dict[str, Choice] = {
             choice=[
                 (["Scroll on Phone"], 0),
                 (["Watch TV"], 0),
-                (["No Nothing"], 0),
+                (["Do Nothing"], 0),
                 (["Back to Living Room"], 0)
             ],
             next_choices=[
@@ -1040,10 +1040,10 @@ STORY_CHOICES: dict[str, Choice] = {
                     (["Stop looking"], 0)
                 ],
                 next_choices=[
-                    "Window",
+                    "Window Look",
                     "",
                     "",
-                    "Window Look"
+                    "Window"
                 ]
             ),
 
@@ -1404,7 +1404,7 @@ STORY_CHOICES: dict[str, Choice] = {
     ),
 
     "Goodbye": Choice(
-        box=[["."], 0],
+        box=[[" "], 0],
         choice=[
             ([""], 0),
             ([""], 0),

@@ -6,7 +6,7 @@ def goodbye_special(engine):
         engine.after(100, engine.update_scene, "Gun Special")
         engine.after(3000, engine.destroy)
     else:
-        engine.destroy()
+        engine.after(1000, engine.destroy)
 
 # Add 'engine' argument to accept the passed 'self'
 def board_special(engine):
@@ -59,7 +59,6 @@ def drawer_check(engine):
 def gun_stuff_special(engine):
     current_scene = engine.current_scene
     if current_scene is not None:
-        print(current_scene.choices[0][1])
         match current_scene.choices[0][1]:
             case 0:
                 pass
@@ -173,14 +172,7 @@ def living_room_special(engine):
     box = ""
     if not engine.TEETH_BRUSHED and not engine.FACE_WASHED and not engine.TOOK_LEAK:
         box += "As I step into the living room, the light from outside casts long shadows across the floor. The unwashed feeling of my face and the lingering taste of unbrushed teeth make me uneasy. My bladder feels full, a reminder of my neglect to take care of myself this morning. The weight of these oversights presses down on you, making each movement of mine feel heavier than the last."
-    
-    if engine.deviance > 50:
-        box = "You know what you did."
-    elif engine.deviance > 20:
-        box += "\nOkay I get it. I don\'t matter much to you, but can you at least treat me like a person?"
-    elif engine.deviance > 15:
-        box += "\nLook I know this may be a game to you, but it would be nice to have you take some care on how you treat this day."
-    elif engine.deviance < 50:
+    else:
         box += "\nI walk into my living room, the emptiness is as prevalent as the lack of space. There isn\'t much to do here, but I try to find a way."
 
     current_scene = story.STORY_CHOICES.get("Living Room")
