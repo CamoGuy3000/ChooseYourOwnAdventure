@@ -67,6 +67,21 @@ STORY_CHOICES: dict[str, Choice] = {
             "To The Living Room"
         ]
     ),
+    "Snooze": Choice(
+        box=[["You hit the snooze button, stealing a few more moments of rest.", "Still snoozing."], 0],
+        choice=[
+            (["Snooze Again"], 0),
+            (["Wake Up"], 0),
+            ([""], 0),
+            ([""], 0)
+        ],
+        next_choices=[
+            "Snooze",
+            "Wake Up",
+            "",
+            ""
+        ]
+    ),
 
     "Nightstand": Choice(
         box=[["Looking at my nightstand, there are only a few things I could possibly interact with.", "Still my nightstand."], 0],
@@ -131,21 +146,290 @@ STORY_CHOICES: dict[str, Choice] = {
                 ""
             ]
         ),
-        "Phone": Choice( # TODO: Add more content here
-            box="",
+        "Phone": Choice(
+            box=[[
+                "A great morning habit", "Still a great morning habit..."
+                ], 0],
             choice=[
-                ([""], 0),
-                ([""], 0),
-                ([""], 0),
-                ([""], 0)
+                (["YouTube"], 0),
+                (["TikTok"], 0),
+                (["Something more productive"], 0),
+                (["Put it down"], 0)
             ],
             next_choices=[
-                "",
-                "",
-                "",
-                ""
+                "Scroll",
+                "Scroll",
+                "Productive",
+                "Nightstand"
             ]
         ),
+            "Scroll": Choice(
+                box=[[
+                    "Cat videos, nice. Oh that guy really should have hit the breaks. More cat videos. There was a heist? Cool. You don\'t need to get back into politics."
+                ], 0],
+            choice=[
+                (["Keep scrolling"], 0),
+                ([""], 0),
+                ([""], 0),
+                (["Its time to stop"], 0)
+            ],
+            next_choices=[
+                "Scroll",
+                "",
+                "",
+                "Phone"
+            ]
+        ),
+            "Productive": Choice(
+                box=[[
+                    "I guess this isn't as bad as scrolling through mindless videos."
+                ], 0],
+            choice=[
+                (["Mail"], 0),
+                (["Texts"], 0),
+                (["Discord"], 0),
+                (["Get off your phone"], 0)
+            ],
+            next_choices=[
+                "Phone Mail",
+                "Texts",
+                "Discord",
+                "Nightstand"
+            ]
+        ),
+                "Phone Mail": Choice(
+                    box=[["No new emails."], 0],
+                    choice=[
+                        (["Old Emails"], 0),
+                        (["Alright enough phone usage"], 0),
+                        (["Time to Scroll"], 0),
+                        (["Lets still try to be productive"], 0)
+                    ],
+                    next_choices=[
+                        "Phone Old Emails",
+                        "Nightstand",
+                        "Scroll",
+                        "Productive"
+                    ]
+                ),
+                    "Phone Old Emails": Choice(
+                        box=[["Just spam and newsletters. Why are we looking at this?"], 0],
+                        choice=[
+                            (["Older"], 0),
+                            (["Back to productiveness"], 0),
+                            ([""], 0),
+                            ([""], 0)
+                        ],
+                        next_choices=[
+                            "Phone Older Emails",
+                            "Productive",
+                            "",
+                            ""
+                        ]
+                    ),
+                        "Phone Older Emails": Choice(
+                            box=[["Still just spam and newsletters. You know I have things to do right?"], 0],
+                            choice=[
+                                (["Even Older"], 0),
+                                (["Back to productiveness"], 0),
+                                ([""], 0),
+                                ([""], 0)
+                            ],
+                            next_choices=[
+                                "Phone Oldest Emails",
+                                "Productive",
+                                "",
+                                ""
+                            ]
+                        ),
+                            "Phone Oldest Emails": Choice(
+                                box=[[
+                                    "Key kiddo, I don't know if you'll get this, but here is your first email. Testing 1 2 3... Boo! Alright thats enough, love ya kid\nDad",
+                                    "Your transcript just came in, I can't beleive what a good job you are doing little man. I know it sucks I can\'t be there to congratulate you in person, but know I am so so so proud of you.\nDad",
+                                    "Netflix code: 834668",
+                                    "I know we just talked... but I love you son. I\'ll always be there, even when I'm not.\nDad",
+                                    "That was the last email... why can't there be another",
+                                    "But there was nothing else..."
+                                    ], 0],
+                                choice=[
+                                    (["Another"], 0),
+                                    (["Time to be less productive"], 0),
+                                    ([""], 0),
+                                    ([""], 0)
+                                ],
+                                next_choices=[
+                                    "Phone Oldest Emails",
+                                    "Productive",
+                                    "",
+                                    ""
+                                ]
+                            ),
+            "Texts": Choice(
+                box=[["No new messages. They delete after a few months to save storage anyway."], 0],
+                choice=[
+                    ([""], 0),
+                    (["Unfortunate"], 0),
+                    ([""], 0),
+                    ([""], 0)
+                ],
+                next_choices=[
+                    "Deleted",
+                    "Phone",
+                    "",
+                    ""
+                ]
+            ),
+                "Deleted": Choice(
+                    box=[["Deleted. Like I said, they are deleted after some time. They aren't on this phone anymore because I never knew the feature was on. Is that explination enough for you??"], 0],
+                    choice=[
+                        (["Yes"], 0),
+                        (["No"], 0),
+                        ([""], 0),
+                        ([""], 0)
+                    ],
+                    next_choices=[
+                        "Deleted Yes",
+                        "Deleted No",
+                        "",
+                        ""
+                    ]
+                ),
+                    "Deleted Yes": Choice(
+                    
+                        box=[["Good. Moving on."], 0],
+                        choice=[
+                            (["Back to phone"], 0),
+                            ([""], 0),
+                            ([""], 0),
+                            ([""], 0)
+                        ],
+                        next_choices=[
+                            "Phone",
+                            "",
+                            "",
+                            ""
+                        ]
+                    ),
+                    "Deleted No": Choice(
+                        box=[["Well tough luck. They are gone. Nothing I can do about it. I don't have any other way of getting those texts anyway."], 0],
+                        choice=[
+                            (["Back to phone"], 0),
+                            ([""], 0),
+                            ([""], 0),
+                            ([""], 0)
+                        ],
+                        next_choices=[
+                            "Phone",
+                            "",
+                            "",
+                            ""
+                        ]
+                    ),
+            "Discord": Choice(
+                box=[["I said something more productive, not something actually productive."], 0],
+                choice=[
+                    (["Servers"], 0),
+                    (["Friends"], 0),
+                    (["Enough of Discord"], 0),
+                    ([""], 0)
+                ],
+                next_choices=[
+                    "Discord Servers",
+                    "Discord Friends",
+                    "Phone",
+                    ""
+                ]
+            ),
+                "Discord Servers": Choice(
+                    box=[["Just scrolling through servers, nothing important here, no new messages."], 0],
+                    choice=[
+                        (["Back to Discord"], 0),
+                        ([""], 0),
+                        ([""], 0),
+                        ([""], 0)
+                    ],
+                    next_choices=[
+                        "Discord",
+                        "",
+                        "",
+                        ""
+                    ]
+                ),
+                "Discord Friends": Choice(
+                    box=[["Only one new message. Its from one of my oldest friends on here actually… it reads:\nYo man, I just was looking through that old tech box you sold me, theres some cool stuff in here: an old typewriter, a phone, harddrive (which looks cooked) and some more stuff. Do you really not need any of this?"], 0],
+                    choice=[
+                        (["Respond"], 0),
+                        ([""], 0),
+                        ([""], 0),
+                        (["Leave it for now"], 0),
+                    ],
+                    next_choices=[
+                        "Discord Respond",
+                        "",
+                        ""
+                        "Discord",
+                    ]
+                ),
+                    "Discord Respond": Choice(
+                        box=[["What should I say? Do I want any of this stuff?"], 0],
+                        choice=[
+                            (["The typewriter"], 0),
+                            (["The phone"], 0),
+                            (["The Harddrive"], 0),
+                            (["Don't respond, forget it"], 0),
+                        ],
+                        next_choices=[
+                            "Want Typewriter",
+                            "Want Phone",
+                            "Want Harddrive",
+                            "Discord",
+                        ]
+                    ),
+                        "Want Typewriter": Choice(
+                            box=[["Yeah sure, I could use an old typewriter. Send it over."], 0],
+                            choice=[
+                                (["Back to Discord"], 0),
+                                ([""], 0),
+                                ([""], 0),
+                                ([""], 0)
+                            ],
+                            next_choices=[
+                                "Discord",
+                                "",
+                                "",
+                                ""
+                            ]
+                        ),
+                        "Want Phone": Choice(
+                            box=[["Yeah sure, I could use an old phone. Send it over."], 0],
+                            choice=[
+                                (["Back to Discord"], 0),
+                                ([""], 0),
+                                ([""], 0),
+                                ([""], 0)
+                            ],
+                            next_choices=[
+                                "Discord",
+                                "",
+                                "",
+                                ""
+                            ]
+                        ),
+                        "Want Harddrive": Choice(
+                            box=[["Yeah sure, I could use the old harddrive. Send it over."], 0],
+                            choice=[
+                                (["Back to Discord"], 0),
+                                ([""], 0),
+                                ([""], 0),
+                                ([""], 0)
+                            ],
+                            next_choices=[
+                                "Discord",
+                                "",
+                                "",
+                                ""
+                            ]
+                        ),
 
     "Desk": Choice(
         box=[[
@@ -168,13 +452,13 @@ STORY_CHOICES: dict[str, Choice] = {
             box=[["Opening my laptop, the screen whines on. Typing in my password opens the screen to my incomplete assignments and unread emails.","My laptop..."], 0],
             choice=[
                 (["Assignments"], 0),
-                (["Emails"], 0),
+                (["Laptop Mail"], 0),
                 (["Close Assignments","Close Mail","Close Messages","Close Notes","Close the Rest","My Desktop"], 0),
                 (["Power Down"], 0)
             ],
             next_choices=[
                 "Assignments",
-                "Emails",
+                "Laptop Mail",
                 "Laptop",
                 "Wake Up"
             ]
@@ -239,7 +523,7 @@ STORY_CHOICES: dict[str, Choice] = {
                         ""
                     ]
                 ),
-                "Music": Choice( #TODO: add music
+                "Music": Choice( 
                     box=[["My music project, I guess we could give it a listen"], 0],
                     choice=[
                         (["Listen"], 0),
@@ -254,21 +538,88 @@ STORY_CHOICES: dict[str, Choice] = {
                         ""
                     ]
                 ),
-            "Email": Choice( #TODO: add email content
-                box=[[""], 0],
+                    "Listen": Choice( #TODO: add music
+                        box=[["*Jam out*"], 0],
+                        choice=[
+                            (["Back to assignments"], 0),
+                            ([""], 0),
+                            ([""], 0),
+                            ([""], 0)
+                        ],
+                        next_choices=[
+                            "Assignments",
+                            "",
+                            "",
+                            ""
+                        ]
+                    ),
+        "Laptop Mail": Choice(
+            box=[["No new emails."], 0],
+            choice=[
+                (["Old Emails"], 0),
+                ([""], 0),
+                ([""], 0),
+                (["Lets still try to be productive"], 0)
+            ],
+            next_choices=[
+                "Laptop Old Emails",
+                "",
+                "",
+                "Productive"
+            ]
+        ),
+            "Laptop Old Emails": Choice(
+                box=[["Just spam and newsletters. Why are we looking at this?"], 0],
                 choice=[
-                    ([""], 0),
-                    ([""], 0),
+                    (["Older"], 0),
+                    (["Back to productiveness"], 0),
                     ([""], 0),
                     ([""], 0)
                 ],
                 next_choices=[
-                    "",
-                    "",
+                    "Laptop Older Emails",
+                    "Laptop",
                     "",
                     ""
                 ]
             ),
+                "Laptop Older Emails": Choice(
+                    box=[["Still just spam and newsletters. You know I have things to do right?"], 0],
+                    choice=[
+                        (["Even Older"], 0),
+                        (["Back to productiveness"], 0),
+                        ([""], 0),
+                        ([""], 0)
+                    ],
+                    next_choices=[
+                        "Laptop Oldest Emails",
+                        "Laptop",
+                        "",
+                        ""
+                    ]
+                ),
+                    "Laptop Oldest Emails": Choice(
+                        box=[[
+                            "Key kiddo, I don't know if you'll get this, but here is your first email. Testing 1 2 3... Boo! Alright thats enough, love ya kid\nDad",
+                            "Your transcript just came in, I can't beleive what a good job you are doing little man. I know it sucks I can\'t be there to congratulate you in person, but know I am so so so proud of you.\nDad",
+                            "Netflix code: 834668",
+                            "I know we just talked... but I love you son. I\'ll always be there, even when I'm not.\nDad",
+                            "That was the last email... why can't there be another",
+                            "But there was nothing else..."
+                            ], 0],
+                        choice=[
+                            (["Another"], 0),
+                            (["Time to be less productive"], 0),
+                            ([""], 0),
+                            ([""], 0)
+                        ],
+                        next_choices=[
+                            "Laptop Oldest Emails",
+                            "Laptop",
+                            "",
+                            ""
+                        ]
+                    ),
         "Pack Bag": Choice(
             box=[["Grabbing my laptop, charger, water bottle, and a few scattered pens from across my desk, my bag is packed.", "My bag is already packed... I don't have anything else to put in it", "My bag is already packed"], 0],
             choice=[
@@ -454,6 +805,89 @@ STORY_CHOICES: dict[str, Choice] = {
         ]
     ),
 
+
+
+
+
+    ## Endings
+    "Lazy": Choice(
+        box=[["Really? I understand that sleep is important... but this is a game, for your enjoyment, that you chose to play. It was well thought out, had interesting characters, and was meant to show the juxtaposition of player choice in games. How it drives the story, but inherently takes out the meaning of the work. Making the story less of a vessel for the author to convey a message, and more of a reflection of the player themself. If you didn\'t want to engage with that, you didn\'t have to play the game."], 0],
+        choice=[
+            (["Skip"], 0),
+            ([""], 0),
+            ([""], 0),
+            ([""], 0)
+        ],
+        next_choices=[
+            "Lazy Skip",
+            "",
+            "",
+            ""
+        ]
+    ),
+    "Lazy Skip": Choice(
+        box=[["Woah Woah Woah, you can\'t just leave. You didn\'t want to hear the story, I can get that. But now you don\'t want to even hear this? Sure story games can be dull, but what are you doing if you don\'t want to play, *and* you don\'t want to not play. What are you looking for? A quick fix of dopamine is not what you signed up for... I mean look at the title of the *game* you are (not) playing."], 0],
+        choice=[
+            (["Sorry I guess"], 0),
+            ([""], 0),
+            ([""], 0),
+            ([""], 0)
+        ],
+        next_choices=[
+            "Not Lazy Skip",
+            "",
+            "",
+            ""
+        ]
+    ),
+    "Not Lazy Skip": Choice(
+        box=[["So if you didn\'t want to engage in the story, what was missing?"], 0],
+        choice=[
+            (["A Good Story"], 0),
+            (["Action"], 0),
+            (["Intrigue"], 0),
+            (["Something else"], 0)
+        ],
+        next_choices=[
+            "Really!?",
+            "Really!?",
+            "Really!?",
+            "Really!?"
+        ]
+    ),
+    "Really!?": Choice(
+        box=[["Well that\’s unfortunate. Maybe next time you can try actually playing the game before snoozing it away. Did you even read the paragraph I wrote? The analysis I... you know what? Fine. You don't like the game thats okay, good luck finding enjoyment somewhere else."], 0],
+        choice=[
+            (["Goodbye"], 0),
+            ([""], 0),
+            ([""], 0),
+            ([""], 0)
+        ],
+        next_choices=[
+            "Goodbye",
+            "",
+            "",
+            ""
+        ]
+    ),
+
+
+
+    "Goodbye": Choice(
+        box=[["."], 0],
+        choice=[
+            ([""], 0),
+            ([""], 0),
+            ([""], 0),
+            ([""], 0)
+        ],
+        next_choices=[
+            "t",
+            "",
+            "",
+            ""
+        ]
+    ),
 }
 
 

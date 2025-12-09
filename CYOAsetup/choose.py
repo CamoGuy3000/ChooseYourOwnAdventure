@@ -1,13 +1,10 @@
 import customtkinter
-from specialChoices import SPECIAL_CHOICES
+from specialChoices import SPECIAL_CHOICES, LOST_TIME_CHOICES
 from story import STORY_CHOICES as S_C
 # from story import TEST_STORY_CHOICES as S_C
 from story import Choice
-# import specialFunctions
 
-DEBUG = True
-
-# REMOVE global TYPING_SPEED here
+DEBUG = False
 
 class TextChoice(customtkinter.CTk):
     def __init__(self, fg_color = None, **kwargs):
@@ -21,6 +18,14 @@ class TextChoice(customtkinter.CTk):
         self.HAVE_GUN = False
         self.BAG_PACKED = False
         self.WATCH_ON = False
+        self.LATE = False
+        self.EGGS = False
+        self.snooze_time = 0
+        self.lost_time = 0
+        self.dad1_found = False
+        self.wants_typewriter = False
+        self.wants_phone = False
+        self.wants_harddrive = False
 
         self.title("Choose")
         # self.geometry("1920x1080")
@@ -140,6 +145,8 @@ class TextChoice(customtkinter.CTk):
                     if next_node in SPECIAL_CHOICES:
                         # PASS 'SELF' TO THE FUNCTION
                         SPECIAL_CHOICES[next_node](self)
+                    if next_node in LOST_TIME_CHOICES:
+                        self.lost_time += LOST_TIME_CHOICES[next_node]
                     
                     btn_opts, btn_idx = next_choices_names[idx]
                     next_choices_names[idx] = (btn_opts, min(btn_idx + 1, len(btn_opts) - 1))

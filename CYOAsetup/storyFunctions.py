@@ -1,9 +1,21 @@
 import story
 
 
+def goodbye_special(engine):
+    engine.destroy()
+
 # Add 'engine' argument to accept the passed 'self'
 def board_special(engine):
     story.TEST_STORY_CHOICES["Board"].box_text += "\n\nYou feel a bit dizzy as you step onto the boat."
+
+def snooze_special(engine):
+    engine.typing_speed = engine.normal_typing_speed
+    engine.snooze_time += 1
+
+    if engine.snooze_time >= 10:
+        current_scene = story.STORY_CHOICES.get("Snooze")
+        if current_scene is not None:
+            current_scene.next_choices[0] = "Lazy"
 
 # Add 'engine' argument and update engine.typing_speed
 def wake_up_special(engine):
@@ -88,4 +100,40 @@ def pack_bag(engine):
     if not engine.BAG_PACKED:
         engine.BAG_PACKED = True
 
+
+def lazy_special(engine):
+    current_scene = story.STORY_CHOICES.get("Lazy")
+    if current_scene is not None:
+        engine.after(3000, _l1, engine)
+        
+        engine.after(15000, _l2, engine)
+
+def _l1(engine):
+    if engine.current_scene == story.STORY_CHOICES["Lazy"]:
+        engine._configure_buttons(story.STORY_CHOICES["Lazy"].choices, story.STORY_CHOICES["Lazy"].next_choices)
+        
+def _l2(engine):
+    if engine.current_scene == story.STORY_CHOICES["Lazy"]:
+        story.STORY_CHOICES["Lazy"].next_choices[0] = "Not Lazy Skip"
+        engine._configure_buttons(story.STORY_CHOICES["Lazy"].choices, story.STORY_CHOICES["Lazy"].next_choices)
+
+
+def dad_found(engine):
+    engine.dad1_found = True
+
+def texts_question(engine):
+    if engine.dad1_found:
+        current_scene = story.STORY_CHOICES.get("Texts")
+        if current_scene is not None:
+            current_scene.choices[0] = (["Where are his texts?"], 0)
+
+
+def wants_typewriter_special(engine):
+    engine.wants_typewriter = True
+
+def wants_phone_special(engine):
+    engine.wants_phone = True
+
+def wants_harddrive_special(engine):
+    engine.wants_harddrive = True
 
