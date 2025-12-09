@@ -1,3 +1,6 @@
 
 .venv/
 CYOAsetup/__pycache__
+CYOAsetup/build
+CYOAsetup/dist
+CYOAsetup/TheMundane.spec
